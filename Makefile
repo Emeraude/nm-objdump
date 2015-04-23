@@ -14,7 +14,9 @@ NAMEOBJ	=	my_objdump
 DIRNM	=	nm
 DIROBJ	=	objdump
 
-SRCSNM	=	$(DIRNM)/main.c
+SRCSNM	=	$(DIRNM)/main.c			\
+		$(DIRNM)/run_elf.c		\
+		$(DIRNM)/parse_file.c
 
 SRCSOBJ	=	$(DIROBJ)/main.c
 
@@ -34,11 +36,15 @@ OBJSOBJ	=	$(SRCSOBJ:.c=.o)
 
 all:		nm objdump
 
-nm:		$(OBJSNM)
+nm:		$(NAMENM)
+
+objdump:	$(NAMEOBJ);
+
+$(NAMENM):	$(OBJSNM)
 		@$(CC) $(OBJSNM) -o $(NAMENM) $(LDFLAGS)
 		@printf "[\033[0;36mbuilt\033[0m] % 32s\n" $(NAMENM) | tr ' ' '.'
 
-objdump:	$(OBJSOBJ)
+$(NAMEOBJ):	$(OBJSOBJ)
 		@$(CC) $(OBJSOBJ) -o $(NAMEOBJ) $(LDFLAGS)
 		@printf "[\033[0;36mbuilt\033[0m] % 32s\n" $(NAMEOBJ) | tr ' ' '.'
 
