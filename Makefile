@@ -14,7 +14,8 @@ NAMEOBJ	=	my_objdump
 DIRNM	=	nm
 DIROBJ	=	objdump
 
-SRCSNM	=	$(DIRNM)/main.c			\
+SRCSNM	=	$(DIRNM)/fill_symbol.c		\
+		$(DIRNM)/main.c			\
 		$(DIRNM)/run_elf.c		\
 		$(DIRNM)/parse_file.c
 

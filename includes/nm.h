@@ -22,6 +22,13 @@ typedef struct		s_sym
   char const		*strtab;
 }			t_sym;
 
+typedef struct		s_symbol
+{
+  unsigned int		value;
+  char			type;
+  char const		*name;
+}			t_symbol;
+
 typedef struct		s_elf
 {
   Elf64_Ehdr const	*ehdr;
@@ -42,5 +49,9 @@ typedef struct		s_elf
 int	parse_file(char const *const file, t_elf *const elf);
 
 int	run_elf(t_elf *const elf);
+
+void	fill_symbol(t_elf *const elf,
+		    Elf64_Sym const *const sym,
+		    t_symbol *const symbol);
 
 #endif /* !NM_H_ */
