@@ -16,11 +16,10 @@
 #include <elf.h>
 #include "nm.h"
 
-static int	check_magic_number(char const *const content,
-				   unsigned int const len)
+static int	check_magic_number(t_elf *const elf)
 {
-  if (len < sizeof(Elf64_Ehdr)
-      || memcmp(content, MAGIC_NUMBER, sizeof(MAGIC_NUMBER) - 1))
+  if (elf->len < sizeof(Elf64_Ehdr)
+      || memcmp(elf->ehdr, MAGIC_NUMBER, sizeof(MAGIC_NUMBER) - 1))
     {
       fprintf(stderr, "File format not recognized\n");
       return (0);
@@ -28,28 +27,27 @@ static int	check_magic_number(char const *const content,
   return (1);
 }
 
-void	*parse_file(char const *const file)
+int	parse_file(char const *const file, t_elf *const elf)
 {
-  void	*content;
   char	err[300];
   int	fd;
-  int	len;
 
   if ((fd = open(file, O_RDONLY)) == -1)
     {
       sprintf(err, "open \"%s\"", file);
       perror(err);
-      return (NULL);
+      return (0);
     }
-  if ((len = lseek(fd, 0, SEEK_END)) == -1)
+  if ((elf->len = lseek(fd, 0, SEEK_END)) == (unsigned)-1)
     {
       perror("lseek");
-      return (NULL);
+      return (0);
     }
-  if (!(content = mmap(NULL, len, PROT_READ, MAP_SHARED, fd, 0)))
+  if (!(elf->ehdr = mmap(NULL, elf->len, PROT_READ, MAP_SHARED, fd, 0)))
     {
       perror("mmap");
-      return (NULL);
+      return (0);
     }
-  return (check_magic_number(content, len) ? content : NULL);
+  elf->end = (void *)elf->ehdr + elf->len;
+  return (check_magic_number(elf));
 }

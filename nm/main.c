@@ -21,12 +21,12 @@ static void	print_usage(char const *const bin_name)
 
 int	main(int const ac, char const *const *const av)
 {
-  void	*file;
+  t_elf elf;
 
   if ((ac < 2
-       && !(file = parse_file("a.out")))
-      || !(file = parse_file(av[1]))
-      || !run_elf((Elf64_Ehdr *) file))
+       && !parse_file("a.out", &elf))
+      || !parse_file(av[1], &elf)
+      || !run_elf(&elf))
     return (EXIT_FAILURE);
   return (EXIT_SUCCESS);
 }
