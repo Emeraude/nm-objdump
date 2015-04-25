@@ -12,13 +12,14 @@
 #include <string.h>
 #include "nm.h"
 
-static void	print_usage(char const *const bin_name)
+static int	print_usage(char const *const bin_name)
 {
   printf("Usage: %s [--sort=24] [--help] [bin]...\n", bin_name);
+  return (1);
 }
 
-static int	more_than_one_file(int const ac,
-				   char const *const *const av)
+static int	nb_files(int const ac,
+			 char const *const *const av)
 {
   register int	i;
   char		found;
@@ -27,10 +28,9 @@ static int	more_than_one_file(int const ac,
   found = 0;
   while (++i < ac)
     if (strcmp(av[i], "--sort=24")
-	&& strcmp(av[i], "--help")
-	&& found++)
-      return (1);
-  return (0);
+	&& strcmp(av[i], "--help"))
+      ++found;
+  return (found);
 }
 
 static int	get_args(int const ac,
@@ -46,19 +46,19 @@ static int	get_args(int const ac,
       if (!strcmp(av[i], "--sort=24"))
 	elf->sort = 24;
       else if (!strcmp(av[i], "--help"))
-	{
-	  print_usage(*av);
-	  return (1);
-	}
+	return (print_usage(*av));
       else
 	{
-	  if (more_than_one_file(ac, av))
+	  if (nb_files(ac, av) > 1)
 	    printf("\n%s:\n", av[i]);
 	  if (!parse_file(av[i], elf)
 	      || !run_elf(elf))
 	    return (0);
 	}
     }
+  if (!nb_files(ac, av))
+    return (parse_file("a.out", elf)
+	    && run_elf(elf));
   return (1);
 }
 
@@ -66,10 +66,5 @@ int	main(int const ac, char const *const *const av)
 {
   t_elf	elf;
 
-  if ((ac < 2
-       && (!parse_file("a.out", &elf)
-	   || !run_elf(&elf)))
-      || !get_args(ac, av, &elf))
-    return (EXIT_FAILURE);
-  return (EXIT_SUCCESS);
+  return (get_args(ac, av, &elf) ? EXIT_SUCCESS : EXIT_FAILURE);
 }

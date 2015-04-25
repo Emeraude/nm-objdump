@@ -43,9 +43,12 @@ void		sort_sym(t_symbol *const sym_list, int const sort)
       while (sym_list[++j].value
 	     || sym_list[j].type
 	     || sym_list[j].name)
-	if ((sort == 24
-	     && strcmp(sym_list[i].name, sym_list[j].name) > 0)
-	    || yolo_cmp(sym_list[i].name, sym_list[j].name) > 0)
+	if (sort == 24)
+	  {
+	    if (strcmp(sym_list[i].name, sym_list[j].name) > 0)
+	      swap(&sym_list[i], &sym_list[j]);
+	  }
+	else if (yolo_cmp(sym_list[i].name, sym_list[j].name) > 0)
 	  swap(&sym_list[i], &sym_list[j]);
       ++j;
     }
