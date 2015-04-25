@@ -16,8 +16,6 @@
 #include <elf.h>
 #include "objdump.h"
 
-#define STRTAB ((void *)elf->ehdr + elf->shdr[elf->ehdr->e_shstrndx].sh_offset)
-
 static int	check_file(t_elf *const elf)
 {
   if (elf->len < sizeof(Elf64_Ehdr)
@@ -28,9 +26,9 @@ static int	check_file(t_elf *const elf)
     }
   if ((void *)(elf->shdr = ((void *)elf->ehdr + elf->ehdr->e_shoff)) > elf->end
       || (void *)&elf->shdr[elf->ehdr->e_shstrndx] > elf->end
-      || (void *)STRTAB > elf->end)
+      || (void *)(STRTAB) > elf->end)
     return (fprintf(stderr, "Error : invalid file\n") && 0);
-  elf->strtab = (char *)STRTAB;
+  elf->strtab = (char *)(STRTAB);
   return (1);
 }
 

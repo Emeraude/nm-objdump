@@ -12,8 +12,6 @@
 #include <string.h>
 #include "objdump.h"
 
-#define IS_PRINTABLE(x)	(x >= ' ' && x <= '~')
-
 void		print_hexa(uint8_t const *const data, int const size)
 {
   register int	i;

@@ -12,8 +12,6 @@
 #include <elf.h>
 #include "objdump.h"
 
-#define SIZE(x)	(sizeof(x) / sizeof(*x))
-
 static char const		*machine_name(t_elf *const elf)
 {
   register int			i;

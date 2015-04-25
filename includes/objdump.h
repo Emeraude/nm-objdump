@@ -39,6 +39,11 @@ typedef struct		s_elf
 #  define EXIT_FAILURE	1
 # endif
 
+# define IS_PRINTABLE(x)	(x >= ' ' && x <= '~')
+# define SIZE(x)	(sizeof(x) / sizeof(*x))
+
+# define STRTAB (void *)elf->ehdr + elf->shdr[elf->ehdr->e_shstrndx].sh_offset
+
 int	parse_file(char const *const file, t_elf *const elf);
 
 int	write_header(t_elf *const elf);
