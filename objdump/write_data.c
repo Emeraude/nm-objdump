@@ -48,12 +48,8 @@ void		print_ascii(uint8_t const *const data, int const size)
 
 void	print_data(t_elf *const elf, int const i, int const j)
 {
-  if (!elf->shdr[i].sh_addr)
-    printf(" %04x ",
-	   (int)(elf->shdr[i].sh_addr + j - elf->shdr[i].sh_offset));
-  else
-    printf(" %x ",
-	   (int)(elf->shdr[i].sh_addr + j - elf->shdr[i].sh_offset));
+  printf(" %04x ",
+	 (int)(elf->shdr[i].sh_addr + j - elf->shdr[i].sh_offset));
   print_hexa((unsigned char *)elf->ehdr + j,
 	     elf->shdr[i].sh_offset + elf->shdr[i].sh_size - j);
   print_ascii((unsigned char *)elf->ehdr + j,
