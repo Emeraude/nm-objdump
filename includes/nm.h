@@ -38,6 +38,13 @@ typedef struct		s_elf
   t_sym			sym;
 }			t_elf;
 
+typedef struct		s_type
+{
+  char			ch;
+  uint32_t		type;
+  uint64_t		flags;
+}			t_type;
+
 # ifndef EXIT_SUCCESS
 #  define EXIT_SUCCESS	0
 # endif
@@ -50,7 +57,7 @@ int	parse_file(char const *const file, t_elf *const elf);
 
 int	run_elf(t_elf *const elf);
 
-void	fill_symbol(t_elf *const elf,
+int	fill_symbol(t_elf *const elf,
 		    Elf64_Sym const *const sym,
 		    t_symbol *const symbol);
 

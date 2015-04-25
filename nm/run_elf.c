@@ -64,8 +64,8 @@ static t_symbol		*get_sym(t_elf *const elf)
 	{
 	  if ((void *)&elf->sym.strtab[tmp->st_name] > elf->end)
 	    return (fprintf(stderr, "Error : invalid file\n") * 0 + NULL);
-	  fill_symbol(elf, tmp, &sym_list[i]);
-	  ++i;
+	  if (fill_symbol(elf, tmp, &sym_list[i++]) == -1)
+	    return (NULL);
 	}
       ++tmp;
     }
