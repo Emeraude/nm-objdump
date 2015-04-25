@@ -19,7 +19,10 @@ SRCSNM	=	$(DIRNM)/fill_symbol.c		\
 		$(DIRNM)/run_elf.c		\
 		$(DIRNM)/parse_file.c
 
-SRCSOBJ	=	$(DIROBJ)/main.c
+SRCSOBJ	=	$(DIROBJ)/main.c		\
+		$(DIROBJ)/parse_file.c		\
+		$(DIROBJ)/write_data.c		\
+		$(DIROBJ)/write_header.c
 
 CFLAGS	+=	-W -Wall -Wextra -Werror
 CFLAGS	+=	-I includes

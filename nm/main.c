@@ -8,8 +8,6 @@
 ** Last update Mon Apr 13 17:53:13 2015 broggi_t
 */
 
-#include <stdio.h>
-#include <elf.h>
 #include "nm.h"
 
 #if 0

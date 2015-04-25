@@ -8,7 +8,17 @@
 ** Last update Mon Apr 13 17:53:30 2015 broggi_t
 */
 
-int	main(void)
+#include "objdump.h"
+
+int	main(int const ac, char const *const *const av)
 {
-  return (0);
+  t_elf	elf;
+
+  if ((ac < 2
+       && !parse_file("a.out", &elf))
+      || !parse_file(av[1], &elf)
+      || !write_header(&elf)
+      || !write_data(&elf))
+    return (EXIT_FAILURE);
+  return (EXIT_SUCCESS);
 }
