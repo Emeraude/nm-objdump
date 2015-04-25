@@ -23,9 +23,15 @@ char			get_type(t_elf *const elf, Elf64_Sym const *const sym)
 				   {'D', SHT_PROGBITS, SHF_ALLOC | SHF_WRITE},
 				   {'U', SHT_NULL, 0},
 				   {'T', SHT_PROGBITS,
-				    SHF_ALLOC | SHF_EXECINSTR},
+				   SHF_ALLOC | SHF_EXECINSTR},
 				   {'R', SHT_PROGBITS, 0}};
 
+  if (sym->st_shndx == SHN_UNDEF)
+    return ('U');
+  if (sym->st_shndx == SHN_COMMON)
+    return ('C');
+  if (sym->st_shndx == SHN_ABS)
+    return ('A');
   i = -1;
   while ((unsigned)++i < SIZE(types))
     {
