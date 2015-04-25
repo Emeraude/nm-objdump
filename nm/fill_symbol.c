@@ -12,9 +12,6 @@
 #include <elf.h>
 #include "nm.h"
 
-#define SIZE(x)		(sizeof(x) / sizeof(*x))
-#define LOWER(x)	(x >= 'A' && x <= 'Z' ? x + 0x20 : x)
-
 char			get_type(t_elf *const elf, Elf64_Sym const *const sym)
 {
   register int		i;

@@ -40,7 +40,7 @@ typedef struct		s_elf
 # endif
 
 # define IS_PRINTABLE(x)	(x >= ' ' && x <= '~')
-# define SIZE(x)	(sizeof(x) / sizeof(*x))
+# define SIZE(x)		(sizeof(x) / sizeof(*x))
 
 # define STRTAB (void *)elf->ehdr + elf->shdr[elf->ehdr->e_shstrndx].sh_offset
 

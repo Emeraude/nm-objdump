@@ -95,12 +95,6 @@ static int	print_sym(t_elf *const elf)
   return (1);
 }
 
-#define ELF_SHDR (Elf64_Shdr *)((void *)elf->ehdr + elf->ehdr->e_shoff)
-
-#define SYM_START (Elf64_Sym *)((void *)elf->ehdr + elf->shdr[i].sh_offset)
-#define SYM_END (Elf64_Sym *)((void *)elf->sym.start + elf->shdr[i].sh_size)
-#define SYM_STR (char *)elf->ehdr + elf->shdr[elf->shdr[i].sh_link].sh_offset
-
 int		run_elf(t_elf *const elf)
 {
   register int	i;

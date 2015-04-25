@@ -19,7 +19,7 @@ static void	print_usage(char const *const bin_name)
 
 int	main(int const ac, char const *const *const av)
 {
-  t_elf elf;
+  t_elf	elf;
 
   if ((ac < 2
        && !parse_file("a.out", &elf))
