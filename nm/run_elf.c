@@ -14,35 +14,6 @@
 #include <elf.h>
 #include "nm.h"
 
-static void	swap(t_symbol *const a, t_symbol *const b)
-{
-  t_symbol	c;
-
-  memcpy(&c, a, sizeof(c));
-  memcpy(a, b, sizeof(c));
-  memcpy(b, &c, sizeof(c));
-}
-
-static void	sort_sym(t_symbol *const sym_list)
-{
-  register int	i;
-  register int	j;
-
-  i = -1;
-  while (sym_list[++i].value
-	 || sym_list[i].type
-	 || sym_list[i].name)
-    {
-      j = i - 1;
-      while (sym_list[++j].value
-	     || sym_list[j].type
-	     || sym_list[j].name)
-	if (strcmp(sym_list[i].name, sym_list[j].name) > 0)
-	  swap(&sym_list[i], &sym_list[j]);
-      ++j;
-    }
-}
-
 static t_symbol		*get_sym(t_elf *const elf)
 {
   t_symbol		*sym_list;
@@ -79,7 +50,7 @@ static int	print_sym(t_elf *const elf)
 
   if (!(sym_list = get_sym(elf)))
     return (0);
-  sort_sym(sym_list);
+  sort_sym(sym_list, elf->sort);
   i = -1;
   while (sym_list[++i].value
 	 || sym_list[i].type

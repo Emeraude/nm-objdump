@@ -34,6 +34,7 @@ typedef struct		s_elf
   Elf64_Ehdr const	*ehdr;
   Elf64_Shdr const	*shdr;
   unsigned int		len;
+  int			sort;
   void			*end;
   t_sym			sym;
 }			t_elf;
@@ -68,5 +69,7 @@ int	run_elf(t_elf *const elf);
 int	fill_symbol(t_elf *const elf,
 		    Elf64_Sym const *const sym,
 		    t_symbol *const symbol);
+
+void	sort_sym(t_symbol *const sym_list, int const sort);
 
 #endif /* !NM_H_ */

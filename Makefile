@@ -17,7 +17,8 @@ DIROBJ	=	objdump
 SRCSNM	=	$(DIRNM)/fill_symbol.c		\
 		$(DIRNM)/main.c			\
 		$(DIRNM)/run_elf.c		\
-		$(DIRNM)/parse_file.c
+		$(DIRNM)/parse_file.c		\
+		$(DIRNM)/sort.c
 
 SRCSOBJ	=	$(DIROBJ)/main.c		\
 		$(DIROBJ)/parse_file.c		\
