@@ -65,10 +65,12 @@ int	write_data(t_elf *const elf)
       if ((void *)&elf->shdr[i] > elf->end
 	  || (void *)&elf->strtab[elf->shdr[i].sh_name] > elf->end)
 	return (fprintf(stderr, "Error : invalid file\n") && 0);
-      if ((!elf->shdr[i].sh_addr
-	   && strcmp(&elf->strtab[elf->shdr[i].sh_name], ".comment"))
-	  || !strcmp(&elf->strtab[elf->shdr[i].sh_name], ".bss"))
-      	continue ;
+      if (((elf->shdr[i].sh_type == SHT_SYMTAB
+	    || elf->shdr[i].sh_type == SHT_NOBITS
+	    || elf->shdr[i].sh_type == SHT_STRTAB)
+	   && strcmp(&elf->strtab[elf->shdr[i].sh_name], ".dynstr"))
+	  || !elf->shdr[i].sh_size)
+	continue ;
       printf("Contents of section %s:\n", &elf->strtab[elf->shdr[i].sh_name]);
       j = elf->shdr[i].sh_offset;
       while ((unsigned)j < elf->shdr[i].sh_offset + elf->shdr[i].sh_size)
